@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HONGJU | Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero" aria-label="Hero">
+    <div class="hero__bg" role="img" aria-label="배경 이미지"></div>
+    <div class="hero__overlay"></div>
+
+    <div class="container hero__content">
+      <p class="hero__kicker">HONGJU (안홍주)</p>
+      <h1 class="hero__title">
+        CREATIVE PD<br/>
+        VIDEO PORTFOLIO
+      </h1>
+      <p class="hero__sub">
+        웹드라마 · 공연/행사 영상 · 브랜디드 콘텐츠 · 숏폼 제작
+      </p>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <!-- ABOUT -->
+    <section class="section about" id="about">
+      <div class="container">
+        <h2 class="section__title">ABOUT</h2>
+
+        <div class="about__grid">
+          <!-- LEFT -->
+          <div class="about__left">
+            <div class="about__name">
+              <h3>홍주 / 25세</h3>
+              <p class="muted">
+                한신대학교 디지털영상문화콘텐츠학과 4학년 · 연출/제작 PD 지망
+              </p>
+            </div>
+
+            <p class="about__desc">
+              저는 <strong>연출력</strong>을 중심에 두고, 기획–촬영–편집까지 전 과정을 책임지는 제작자입니다.
+              웹드라마 제작(서울 창조PD), 지역 홍보 콘텐츠, 공연·행사 아카이빙 등
+              다양한 현장에서 <strong>스토리텔링과 실행력</strong>을 동시에 증명해왔습니다.
+              “잘 찍는 것”을 넘어, <strong>목적과 메시지가 남는 영상</strong>을 만들고자 합니다.
+            </p>
+
+            <div class="block">
+              <div class="block__title">SKILLS</div>
+              <div class="chips">
+                <span class="chip">Planning</span>
+                <span class="chip">Directing</span>
+                <span class="chip">Screenwriting</span>
+                <span class="chip">Cinematography</span>
+                <span class="chip">Editing</span>
+                <span class="chip">Color</span>
+                <span class="chip">Sound</span>
+                <span class="chip">Short-form</span>
+                <span class="chip">Branded</span>
+                <span class="chip">Interview</span>
+                <span class="chip">YouTube</span>
+              </div>
+
+              <div class="tools">
+                <span class="tool">Premiere Pro</span>
+                <span class="tool">After Effects</span>
+                <span class="tool">DaVinci Resolve</span>
+                <span class="tool">Photoshop</span>
+                <span class="tool">Illustrator</span>
+              </div>
+            </div>
+
+            <div class="block">
+              <div class="block__title">CAREER HIGHLIGHTS</div>
+              <ul class="list">
+                <li>2025 서울 창조PD 웹드라마 서울특별시장상 우수상</li>
+                <li>2025 용인특례시 용인청년 홍보기자단 영상 제작</li>
+                <li>2024 오산시 지역 상생/상권 활성화 패러디 홍보 영상 제작</li>
+                <li>2024 ‘한신별빛페스타’ 홍보 영상 제작 담당(콘텐츠 마케터)</li>
+                <li>2024 공연 프로젝트 다수(재즈/오케스트라/합창단) 영상 감독·제작</li>
+                <li>2024 교내 브랜디드 콘텐츠 연구 더블 A상(2등) 수상</li>
+              </ul>
+            </div>
+
+            <div class="contact">
+              <div class="contact__title">CONTACT</div>
+              <div class="contact__row">
+                <span class="label">Email</span>
+                <span class="value">anhong94@gmail.com</span>
+              </div>
+              <div class="contact__row">
+                <span class="label">YouTube</span>
+                <span class="value">youtube.com/@yourchannel</span>
+              </div>
+              <div class="contact__row">
+                <span class="label">Instagram</span>
+                <span class="value">@yourid</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+          <aside class="about__right">
+            <figure class="profile">
+              <img src="image/2.jpg" alt="프로필 사진" />
+              <figcaption class="profile__cap">
+                <span class="profile__role">Creative PD</span>
+                <span class="profile__meta">Webdrama · Branded · Performance</span>
+              </figcaption>
+            </figure>
+
+            <div class="sidecard">
+              <div class="sidecard__title">FOCUS</div>
+              <ul class="sidecard__list">
+                <li>웹드라마/서사형 콘텐츠 연출</li>
+                <li>지역/기관 홍보 영상(숏폼 포함)</li>
+                <li>공연·행사 다중카메라/아카이빙</li>
+                <li>기획안·대본·피칭 자료 제작</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>© <span id="y"></span> HONGJU. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    // 연도 자동 표시 (선택)
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
