@@ -1,26 +1,31 @@
 /* ====== Base ====== */
 :root{
-  --bg: #0b1020;
-  --card: #0f1730;
-  --text: #0f1222;
-  --muted: #6b7280;
-  --white: #ffffff;
-  --line: rgba(15, 23, 42, 0.12);
-  --accent: #8b5cf6;  /* 보라 포인트 */
-  --shadow: 0 10px 30px rgba(2, 6, 23, 0.15);
-  --radius: 16px;
+  --bg-main: #0b0b0b;
+  --bg-card: #111111;
+  --bg-soft: #1a1a1a;
+
+  --text-main: #ffffff;
+  --text-sub: #b5b5b5;
+  --text-muted: #8a8a8a;
+
+  --line: rgba(255,255,255,0.08);
+
+  --radius: 14px;
+  --shadow: 0 12px 40px rgba(0,0,0,0.6);
   --max: 1080px;
 }
+
 
 *{ box-sizing: border-box; }
 html, body{ height: 100%; }
 body{
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", "Segoe UI", Roboto, Arial, sans-serif;
-  color: var(--text);
-  background: #f5f6fb;
+  background: var(--bg-main);
+  color: var(--text-main);
   line-height: 1.6;
 }
+
 
 .container{
   width: min(var(--max), calc(100% - 48px));
@@ -359,7 +364,11 @@ body{
   overflow: hidden;
   background: #0b1020;
   border: 1px solid rgba(15,23,42,0.12);
+
+  /* ✅ 추가 */
+  margin: 20px 0;
 }
+
 
 .video__frame iframe{
   position: absolute;
@@ -384,3 +393,158 @@ body{
   color: #3b2a82;
   border-bottom-color: rgba(139,92,246,0.8);
 }
+.video__badges{ display:flex; gap:10px; flex-wrap:wrap; }
+
+.about__right .block{
+  margin-top: 16px;
+}
+/* RIGHT column blocks -> card style (AWARDS 카드화) */
+.about__right .block{
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  padding: 18px 18px 14px;
+
+  /* 기존 .block(좌측용)에서 오던 선/여백 제거 */
+  margin-top: 16px;
+  border-top: none;
+}
+.about__right .block .block__title{
+  margin-bottom: 10px;
+}
+.about__right .block .list{
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+}
+.video__badges{
+  margin-bottom: 12px; /* 배지 목록과 제목 사이 간격 */
+}
+.video__activities{
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(15,23,42,0.12);
+}
+
+.video__activities-title{
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #111827;
+}
+
+.video__activities-list{
+  margin: 0;
+  padding-left: 16px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.video__activities-list li{
+  margin: 4px 0;
+}
+
+/* ===== Black Card Theme ===== */
+.about__left,
+.profile,
+.sidecard,
+.about__right .block{
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.muted,
+.video__desc,
+.video__activities-list,
+.profile__meta{
+  color: var(--text-sub);
+}
+
+.label{
+  color: var(--text-muted);
+}
+.video__badge{
+  background: transparent;
+  color: var(--text-main);
+  border: 1px solid var(--line);
+  font-weight: 600;
+}
+.hero{
+  background: #000;
+}
+
+.hero__overlay{
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.85),
+    rgba(0,0,0,0.95)
+  );
+}
+
+.hero__kicker{ color: var(--text-muted); }
+.hero__title{ color: var(--text-main); }
+.hero__sub{ color: var(--text-sub); }
+.profile img{
+  filter: grayscale(100%) contrast(1.05);
+}
+
+/* ====== BLACK THEME FIX (final override) ====== */
+
+/* 1) 섹션 타이틀/블록 타이틀이 검정(#111827)으로 남아있는 문제 */
+.section__title,
+.block__title,
+.contact__title,
+.sidecard__title,
+.profile__role{
+  color: var(--text-main) !important;
+}
+
+/* 2) 본문 텍스트(설명/리스트/Contact value 등)가 검정으로 남아있는 문제 */
+.about__desc,
+.about__desc strong,
+.list,
+.sidecard__list,
+.value,
+.video__title,
+.video__link,
+.video__link a,
+.video__activities-title{
+  color: var(--text-main) !important;
+}
+
+/* 3) muted(옛 변수 var(--muted))가 아직 남아있어서 안 보이는 문제 */
+.muted,
+.profile__meta,
+.video__desc,
+.video__activities-list,
+.label{
+  color: var(--text-sub) !important;
+}
+
+/* 4) 카드 내부 구분선(옛 line 색)도 블랙 톤에 맞게 */
+.block,
+.contact{
+  border-top-color: var(--line) !important;
+}
+
+/* 5) tool/chip들이 기존 밝은 배경/보라색 텍스트라서 어두운 톤과 충돌 */
+.chip,
+.tool{
+  background: transparent !important;
+  border: 1px solid var(--line) !important;
+  color: var(--text-sub) !important;
+}
+
+/* 6) 링크 밑줄 색도 어두운 톤에 맞게 */
+.video__link a{
+  border-bottom-color: rgba(255,255,255,0.25) !important;
+}
+.video__link a:hover{
+  border-bottom-color: rgba(255,255,255,0.6) !important;
+}
+
+/* 7) HERO에서 옛 변수(--bg, --white) 참조로 깨질 수 있는 부분 정리 */
+.hero{ background: #000 !important; }
+.hero__content{ color: var(--text-main) !important; }
