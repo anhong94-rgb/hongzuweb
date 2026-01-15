@@ -311,13 +311,46 @@ body{
 
 /* ====== Responsive ====== */
 @media (max-width: 920px){
+
+  /* grid → 세로 스택 */
   .about__grid{
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
   }
-  .hero{
-    height: 300px;
+
+  /* ===== 모바일 순서 지정 ===== */
+
+  /* 1. 프로필 사진 */
+  .profile{
+    order: 1;
+  }
+
+  /* 2. FOCUS */
+  .sidecard{
+    order: 2;
+  }
+
+  /* 3. AWARDS */
+  .about__right .block{
+    order: 3;
+  }
+
+  /* 4. ABOUT 텍스트 */
+  .about__left{
+    order: 4;
+  }
+
+  /* 5. FEATURED WORK */
+  .about__left .block:nth-of-type(2){
+    order: 5;
+  }
+
+  /* 6. CONTACT */
+  .contact{
+    order: 6;
   }
 }
+
 
 @media (max-width: 520px){
   .container{
@@ -548,3 +581,4 @@ body{
 /* 7) HERO에서 옛 변수(--bg, --white) 참조로 깨질 수 있는 부분 정리 */
 .hero{ background: #000 !important; }
 .hero__content{ color: var(--text-main) !important; }
+
