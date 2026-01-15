@@ -136,7 +136,8 @@ body{
   .contact { order: 8; }       /* 8. CONTACT */
 
   .card-item { margin-bottom: 16px; width: 100%; padding: 20px; }
-  .profile img { aspect-ratio: 16 / 9; object-position: 50% 20%; }
+/* @media (max-width: 920px) 블록 내부입니다 */
+.profile img { aspect-ratio: 4 / 5; object-position: center; }
 }
 
 .footer { padding: 40px 0; background: #000; text-align: center; font-size: 12px; color: var(--text-muted); }
