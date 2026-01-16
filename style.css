@@ -267,15 +267,31 @@ body{
 ul li::marker { color: var(--accent); } 
 
 /* ====== Profile Section ====== */
-.profile { padding: 0; overflow: hidden; border: none; }
+/* style.css 약 220번째 줄 근처 */
+
+/* style.css 약 220번째 줄 근처 */
+
+.profile { 
+  /* [수정] 위/좌/우 여백은 없애고, 아래쪽 여백만 24px 줍니다 */
+  margin: 0 0 24px 0; 
+  
+  padding: 0; 
+  overflow: hidden; 
+  border: none; 
+}
+
+/* 아래 내용은 기존과 동일 */
 .profile img { 
   width: 100%; 
   aspect-ratio: 4/5; 
   object-fit: cover; 
   filter: grayscale(100%) contrast(1.1); 
 }
-.profile__cap { padding: 20px; background: var(--bg-card); border-top: 1px solid var(--line); }
-
+.profile__cap { 
+  padding: 20px; 
+  background: var(--bg-card); 
+  border-top: 1px solid var(--line); 
+}
 .profile__role { 
   font-weight: 900; 
   font-size: 22px; 
