@@ -1,8 +1,17 @@
-/* ====== Base ====== */
+/* style.css 파일 최상단(@charset이 있다면 그 아래)에 복사 */
+
+/* 1. Montserrat (영문 타이틀용, 구글 폰트) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
+
+
+/* ====== Base & Variables ====== */
 :root{
   --bg-main: #0b0b0b;
   --bg-card: #111111;
   --bg-soft: #1a1a1a;
+  
+  /* 디자인 포인트: 형광 민트 키 컬러 */
+  --accent: #2cedc5; 
   --text-main: #ffffff;
   --text-sub: #b5b5b5;
   --text-muted: #8a8a8a;
@@ -26,10 +35,10 @@ body{
   margin: 0 auto;
 }
 
-/* ====== Hero ====== */
+/* ====== Hero Section (배경 디자인 강화) ====== */
 .hero{
   position: relative;
-  height: 320px;
+  height: 340px; /* 높이를 살짝 줄여서 아래 섹션과 가깝게 */
   background: #000;
   overflow: hidden;
 }
@@ -37,27 +46,96 @@ body{
   position: absolute;
   inset: 0;
   background: url("1.jpg") center/cover no-repeat;
-  filter: saturate(1.05) contrast(1.05);
+  /* 배경 이미지를 더 어둡게 눌러서 그라데이션 빛이 잘 보이게 함 */
+  filter: grayscale(100%) contrast(1.2) brightness(0.4);
 }
 .hero__overlay{
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.92));
+  /* [수정됨] 더 강렬한 키포인트 그라데이션 */
+  background: 
+    /* 1. 전체적으로 어둡게 깔아줌 */
+    linear-gradient(180deg, rgba(0,0,0,0.3) 0%, #0b0b0b 95%),
+    /* 2. 우측 상단에서 떨어지는 강한 민트 빛 (키 라이트) */
+    radial-gradient(circle at 90% 10%, rgba(44, 237, 197, 0.25) 0%, transparent 50%),
+    /* 3. 좌측 하단에서 은은하게 올라오는 보조 빛 */
+    radial-gradient(circle at 10% 100%, rgba(44, 237, 197, 0.1) 0%, transparent 40%);
 }
 .hero__content{
   position: relative;
   height: 100%;
   display: grid;
   align-content: center;
-  gap: 8px;
+  gap: 6px; /* 텍스트 간격도 살짝 좁힘 */
+  padding-top: 20px; /* 시각적 중심 보정 */
 }
-.hero__kicker{ margin: 0; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); font-size: 13px; }
-.hero__title{ margin: 0; font-size: clamp(28px, 3.5vw, 44px); line-height: 1.1; letter-spacing: -0.02em; }
-.hero__sub{ margin: 0; color: var(--text-sub); font-size: 14px; }
 
-/* ====== Section Layout ====== */
-.section{ padding: 56px 0 72px; }
-.section__title{ text-align: center; margin-bottom: 28px; font-size: 22px; letter-spacing: 0.06em; }
+/* 슬로건: 형광 민트 + 네온 효과 */
+.hero__kicker{ 
+  margin: 0; 
+  font-weight: 700; 
+  letter-spacing: 0.05em; 
+  color: var(--accent); 
+  font-size: 15px; 
+  text-shadow: 0 0 12px rgba(44, 237, 197, 0.4); /* 네온 글로우 강화 */
+}
+
+/* 이름/타이틀: 그라데이션 텍스트 */
+/* style.css 약 55번째 줄 근처 */
+
+/* style.css 약 55번째 줄 근처 */
+.hero__title{ 
+  margin: 0; 
+  /* 폰트 크기 유지 */
+  font-size: clamp(36px, 5vw, 60px); 
+  
+  /* [핵심] 폰트 변경: 영문 전용 폰트 Montserrat 적용 */
+  font-family: 'Montserrat', sans-serif;
+  
+  font-weight: 900; 
+  line-height: 1.0; 
+  
+  /* Montserrat는 자간을 너무 좁히면 답답해 보여서 살짝만 풉니다 */
+  letter-spacing: -0.02em; 
+  
+  text-transform: uppercase;
+
+  background: linear-gradient(135deg, #ffffff 40%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.hero__sub{ margin: 0; color: var(--text-sub); font-size: 15px; }
+
+/* ====== Section Layout (간격 좁히기) ====== */
+.section{ 
+  /* [수정됨] 상단 패딩을 56px -> 24px로 대폭 줄임 */
+  padding: 24px 0 72px; 
+}
+
+/* About 타이틀 위쪽 장식 바 스타일 변경 */
+.section__title{ 
+  text-align: center; 
+  margin-bottom: 28px; 
+  font-size: 22px; 
+  letter-spacing: 0.06em; 
+  color: var(--text-main);
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+/* 타이틀 바로 아래 민트색 언더바 */
+.section__title::after {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 3px;
+  background: var(--accent);
+  margin: 10px auto 0;
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--accent); /* 언더바에도 네온 효과 */
+}
 
 .about__grid {
   display: grid;
@@ -66,78 +144,178 @@ body{
   align-items: start;
 }
 
-/* 공통 카드 스타일 */
+/* ====== Card Styles ====== */
 .card-item {
   background: var(--bg-card);
   border-radius: var(--radius);
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: var(--shadow);
   padding: 28px;
   margin-bottom: 24px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-/* PC 칼럼 내부 순서 조정 */
+.card-item:hover {
+  border-color: rgba(44, 237, 197, 0.4);
+  transform: translateY(-3px);
+}
+
 .about__left, .about__right {
   display: flex;
   flex-direction: column;
 }
-.skillsBlock { order: 10; } /* PC에서 Other Works보다 아래로 */
+.skillsBlock { order: 10; }
 .contact { order: 11; }
 
-/* ====== Elements Styling ====== */
+/* ====== Typography & Components ====== */
 .about__name h3 { margin: 0; font-size: 18px; }
 .muted { color: var(--text-sub); font-size: 13px; margin-top: 6px; }
-.about__desc { margin: 18px 0 0; font-size: 14px; }
 
-.block { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 18px; }
-.block__title { font-size: 12px; font-weight: 800; letter-spacing: 0.12em; color: var(--text-main); margin-bottom: 12px; }
+/* style.css 약 170번째 줄 근처 (About 내부 슬로건) */
 
-.chips, .tools { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-.chip, .tool { 
-  padding: 7px 12px; border-radius: 999px; font-size: 12px; 
-  border: 1px solid var(--line); color: var(--text-sub);
+/* style.css 약 170번째 줄 근처 */
+
+.about__slogan {
+  margin: 20px 0 10px 0;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  
+  /* [수정] 다시 깔끔한 흰색으로 변경 */
+  color: #ffffff; 
+  
+  line-height: 1.4;
+  word-break: keep-all;
+  
+  /* 네온 효과도 제거하여 담백하게 */
+  text-shadow: none; 
 }
 
+/* 막대바(|)는 계속 숨김 처리 */
+.about__slogan::before {
+  display: none; 
+}
+
+.about__desc { margin: 10px 0 0; font-size: 14px; color: #d1d1d1; }
+.about__desc strong { color: #fff; border-bottom: 1px solid rgba(44,237,197, 0.4); }
+
+.block { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 18px; }
+.block__title { 
+  font-size: 12px; 
+  font-weight: 800; 
+  letter-spacing: 0.12em; 
+  color: var(--accent); 
+  margin-bottom: 12px; 
+}
+
+/* ====== Skills & Tools (그룹화 디자인) ====== */
+.chips, .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+/* 1. 강조 그룹 (Main Skills) */
+.chip { 
+  padding: 7px 14px; 
+  border-radius: 6px; 
+  font-size: 13px; 
+  font-weight: 700;
+  
+  /* 형광 민트 스타일 */
+  background: rgba(44, 237, 197, 0.05); 
+  border: 1px solid var(--accent);       
+  color: var(--accent);                  
+  box-shadow: 0 0 6px rgba(44, 237, 197, 0.15); /* 은은한 발광 */
+}
+
+/* 2. 서브 그룹 (Sub Skills - 회색) */
+.tool { 
+  padding: 6px 12px; 
+  border-radius: 6px; 
+  font-size: 12px; 
+  /* 차분한 회색 스타일 */
+  background: #1a1a1a;
+  border: 1px solid #333; 
+  color: #777;
+}
+
+/* ====== Featured Work Badge ====== */
 .video__badges { display: flex; gap: 10px; margin-bottom: 12px; }
-.video__badge { padding: 6px 12px; border-radius: 999px; font-size: 12px; border: 1px solid var(--line); font-weight: 700; }
+.video__badge { 
+  padding: 6px 12px; 
+  border-radius: 999px; 
+  font-size: 12px; 
+  border: 1px solid var(--accent); 
+  color: var(--accent);
+  font-weight: 700; 
+}
+
 .video__title { margin: 0; font-size: 16px; font-weight: 800; }
 .video__desc { font-size: 13px; color: var(--text-sub); margin-top: 4px; }
-.video__frame { width: 100%; aspect-ratio: 16/9; border-radius: 14px; overflow: hidden; margin: 20px 0; border: 1px solid var(--line); }
+.video__frame { width: 100%; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; margin: 20px 0; border: 1px solid var(--line); }
 .video__frame iframe { width: 100%; height: 100%; border: none; }
-.video__link { font-size: 13px; margin-top: 10px; }
-.video__link a { color: #fff; font-weight: 800; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.25); }
 
-.video__activities-list, .sidecard__list, .list { margin: 0; padding-left: 18px; font-size: 14px; }
+.video__link { font-size: 13px; margin-top: 10px; color: var(--text-sub); }
+.video__link a { 
+  color: var(--accent); 
+  font-weight: 700; 
+  text-decoration: none; 
+  border-bottom: 1px solid transparent;
+  transition: border-bottom 0.2s;
+}
+.video__link a:hover { border-bottom: 1px solid var(--accent); }
+
+.video__activities-list, .sidecard__list, .list { margin: 0; padding-left: 18px; font-size: 14px; color: #d1d1d1; }
 .video__activities-list li, .sidecard__list li, .list li { margin: 8px 0; }
+ul li::marker { color: var(--accent); } 
 
-.profile { padding: 0; overflow: hidden; }
-.profile img { width: 100%; aspect-ratio: 4/5; object-fit: cover; filter: grayscale(100%) contrast(1.05); }
-.profile__cap { padding: 16px; }
-.profile__role { font-weight: 900; font-size: 13px; display: block; }
-.profile__meta { color: var(--text-sub); font-size: 12px; }
+/* ====== Profile Section ====== */
+.profile { padding: 0; overflow: hidden; border: none; }
+.profile img { 
+  width: 100%; 
+  aspect-ratio: 4/5; 
+  object-fit: cover; 
+  filter: grayscale(100%) contrast(1.1); 
+}
+.profile__cap { padding: 20px; background: var(--bg-card); border-top: 1px solid var(--line); }
+
+.profile__role { 
+  font-weight: 900; 
+  font-size: 22px; 
+  display: block; 
+  margin-bottom: 6px; 
+  letter-spacing: -0.02em; 
+  color: #fff;
+}
+.profile__meta { 
+  color: var(--accent); 
+  font-size: 14px; 
+  line-height: 1.5; 
+  font-weight: 600;
+  display: block; 
+}
 
 .contact__row { display: grid; grid-template-columns: 80px 1fr; padding: 6px 0; }
 .label { color: var(--text-muted); font-size: 12px; font-weight: 700; }
-.value { font-size: 13px; }
+.value { font-size: 13px; color: #eee; }
 
 /* ====== Responsive (Mobile) ====== */
 @media (max-width: 920px){
   .about__grid { display: flex; flex-direction: column; }
-  .about__left, .about__right { display: contents; } /* 바구니 제거, 자식들이 부모 순서 따름 */
+  .about__left, .about__right { display: contents; }
 
-  /* 모바일 강제 순서 지정 */
-  .profile { order: 1; }      /* 1. 프로필사진 */
-  .aboutIntro { order: 2; }    /* 2. 안홍주 / 26세... */
-  .focusCard { order: 3; }     /* 3. FOCUS */
-  .awardsCard { order: 4; }    /* 4. AWARDS */
-  .featured { order: 5; }      /* 5. FEATURED WORK */
-  .otherWorks { order: 6; }    /* 6. OTHER WORKS */
-  .skillsBlock { order: 7; }   /* 7. SKILLS */
-  .contact { order: 8; }       /* 8. CONTACT */
+  .profile { order: 1; margin-bottom: 24px; }
+  .aboutIntro { order: 2; }
+  .focusCard { order: 3; }
+  .awardsCard { order: 4; }
+  .featured { order: 5; }
+  .otherWorks { order: 6; }
+  .skillsBlock { order: 7; }
+  .contact { order: 8; }
 
   .card-item { margin-bottom: 16px; width: 100%; padding: 20px; }
-/* @media (max-width: 920px) 블록 내부입니다 */
-.profile img { aspect-ratio: 4 / 5; object-position: center; }
+  .hero__title { font-size: 32px; }
+  
+  /* 모바일에서 Hero 높이 자동 조절 (더 컴팩트하게) */
+  .hero { height: 280px; }
+  .section { padding-top: 16px; } /* 모바일에서 간격 더 줄임 */
 }
 
 .footer { padding: 40px 0; background: #000; text-align: center; font-size: 12px; color: var(--text-muted); }
