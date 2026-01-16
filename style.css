@@ -1,10 +1,7 @@
-/* style.css 파일 최상단(@charset이 있다면 그 아래)에 복사 */
-
-/* 1. Montserrat (영문 타이틀용, 구글 폰트) */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
-
-
 /* ====== Base & Variables ====== */
+/* 상단 폰트 임포트 유지 */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
+
 :root{
   --bg-main: #0b0b0b;
   --bg-card: #111111;
@@ -22,6 +19,8 @@
 }
 
 *{ box-sizing: border-box; }
+html { scroll-behavior: smooth; } /* 스크롤 부드럽게 이동 */
+
 body{
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif;
@@ -30,35 +29,99 @@ body{
   line-height: 1.6;
 }
 
-.container{
-  width: min(var(--max), calc(100% - 48px));
+.container {
+  /* [수정 전] width: min(var(--max), calc(100% - 48px)); */
+  
+  /* [수정 후] 양옆 여백을 기존 24px -> 60px로 대폭 늘림 */
+  /* 화면이 작아져도 최소한의 여백을 확보하여 답답하지 않게 함 */
+  width: min(var(--max), calc(100% - 120px));
+  
   margin: 0 auto;
 }
 
-/* ====== Hero Section (배경 디자인 강화) ====== */
+/* ====== Navigation Bar ====== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  z-index: 1000;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+/* 스크롤 시 배경 검게 변함 */
+.navbar.scrolled {
+  background: rgba(11, 11, 11, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+/* style.css 약 50번째 줄 근처 */
+
+.navbar__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  /* [핵심 수정] 
+     기존에 있던 "width: 100%;" 코드를 삭제했습니다.
+     그래야 위에서 설정한 .container의 너비(양옆 여백 60px)를 따르게 됩니다. 
+  */
+}
+
+.navbar__logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.navbar__menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 30px;
+}
+
+.navbar__menu li a {
+  text-decoration: none;
+  color: var(--text-sub);
+  font-size: 13px;
+  font-weight: 700;
+  transition: color 0.2s;
+  letter-spacing: 0.05em;
+}
+
+.navbar__menu li a:hover {
+  color: var(--accent);
+}
+
+/* ====== Hero Section ====== */
 .hero{
   position: relative;
-  height: 340px; /* 높이를 살짝 줄여서 아래 섹션과 가깝게 */
+  height: 340px; 
   background: #000;
   overflow: hidden;
+  margin-top: 0; /* Nav가 fixed이므로 margin 0 */
 }
 .hero__bg{
   position: absolute;
   inset: 0;
   background: url("1.jpg") center/cover no-repeat;
-  /* 배경 이미지를 더 어둡게 눌러서 그라데이션 빛이 잘 보이게 함 */
   filter: grayscale(100%) contrast(1.2) brightness(0.4);
 }
 .hero__overlay{
   position: absolute;
   inset: 0;
-  /* [수정됨] 더 강렬한 키포인트 그라데이션 */
   background: 
-    /* 1. 전체적으로 어둡게 깔아줌 */
     linear-gradient(180deg, rgba(0,0,0,0.3) 0%, #0b0b0b 95%),
-    /* 2. 우측 상단에서 떨어지는 강한 민트 빛 (키 라이트) */
     radial-gradient(circle at 90% 10%, rgba(44, 237, 197, 0.25) 0%, transparent 50%),
-    /* 3. 좌측 하단에서 은은하게 올라오는 보조 빛 */
     radial-gradient(circle at 10% 100%, rgba(44, 237, 197, 0.1) 0%, transparent 40%);
 }
 .hero__content{
@@ -66,40 +129,28 @@ body{
   height: 100%;
   display: grid;
   align-content: center;
-  gap: 6px; /* 텍스트 간격도 살짝 좁힘 */
-  padding-top: 20px; /* 시각적 중심 보정 */
+  gap: 6px; 
+  padding-top: 40px; /* Nav 높이만큼 시각적 보정 */
 }
 
-/* 슬로건: 형광 민트 + 네온 효과 */
+/* 슬로건 & 타이틀 */
 .hero__kicker{ 
   margin: 0; 
   font-weight: 700; 
   letter-spacing: 0.05em; 
   color: var(--accent); 
   font-size: 15px; 
-  text-shadow: 0 0 12px rgba(44, 237, 197, 0.4); /* 네온 글로우 강화 */
+  text-shadow: 0 0 12px rgba(44, 237, 197, 0.4); 
 }
 
-/* 이름/타이틀: 그라데이션 텍스트 */
-/* style.css 약 55번째 줄 근처 */
-
-/* style.css 약 55번째 줄 근처 */
 .hero__title{ 
   margin: 0; 
-  /* 폰트 크기 유지 */
   font-size: clamp(36px, 5vw, 60px); 
-  
-  /* [핵심] 폰트 변경: 영문 전용 폰트 Montserrat 적용 */
   font-family: 'Montserrat', sans-serif;
-  
   font-weight: 900; 
   line-height: 1.0; 
-  
-  /* Montserrat는 자간을 너무 좁히면 답답해 보여서 살짝만 풉니다 */
   letter-spacing: -0.02em; 
-  
   text-transform: uppercase;
-
   background: linear-gradient(135deg, #ffffff 40%, var(--accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -108,35 +159,42 @@ body{
 
 .hero__sub{ margin: 0; color: var(--text-sub); font-size: 15px; }
 
-/* ====== Section Layout (간격 좁히기) ====== */
+/* ====== Section Layout ====== */
 .section{ 
-  /* [수정됨] 상단 패딩을 56px -> 24px로 대폭 줄임 */
-  padding: 24px 0 72px; 
+  padding: 80px 0 40px; /* Nav 높이 고려해서 상단 패딩 늘림 */
+  border-top: 1px solid transparent; /* 마진 병합 방지 */
 }
 
-/* About 타이틀 위쪽 장식 바 스타일 변경 */
 .section__title{ 
   text-align: center; 
-  margin-bottom: 28px; 
-  font-size: 22px; 
-  letter-spacing: 0.06em; 
+  margin-bottom: 40px; 
+  font-size: 24px; 
+  font-family: 'Montserrat', sans-serif; /* 제목도 힙하게 */
+  font-weight: 900;
+  letter-spacing: 0.1em; 
   color: var(--text-main);
   position: relative;
-  display: inline-block;
-  width: 100%;
 }
-/* 타이틀 바로 아래 민트색 언더바 */
 .section__title::after {
   content: '';
   display: block;
   width: 30px;
   height: 3px;
   background: var(--accent);
-  margin: 10px auto 0;
+  margin: 15px auto 0;
   border-radius: 2px;
-  box-shadow: 0 0 8px var(--accent); /* 언더바에도 네온 효과 */
+  box-shadow: 0 0 8px var(--accent);
 }
 
+.subsection__title {
+  font-size: 16px;
+  color: var(--text-sub);
+  margin-bottom: 20px;
+  border-left: 3px solid var(--accent);
+  padding-left: 12px;
+}
+
+/* ====== About Grid ====== */
 .about__grid {
   display: grid;
   grid-template-columns: 1.3fr 0.9fr;
@@ -144,7 +202,7 @@ body{
   align-items: start;
 }
 
-/* ====== Card Styles ====== */
+/* Card Styles */
 .card-item {
   background: var(--bg-card);
   border-radius: var(--radius);
@@ -154,46 +212,26 @@ body{
   margin-bottom: 24px;
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
-
 .card-item:hover {
   border-color: rgba(44, 237, 197, 0.4);
   transform: translateY(-3px);
 }
 
-.about__left, .about__right {
-  display: flex;
-  flex-direction: column;
-}
+.about__left, .about__right { display: flex; flex-direction: column; }
 .skillsBlock { order: 10; }
 .contact { order: 11; }
 
-/* ====== Typography & Components ====== */
 .about__name h3 { margin: 0; font-size: 18px; }
 .muted { color: var(--text-sub); font-size: 13px; margin-top: 6px; }
-
-/* style.css 약 170번째 줄 근처 (About 내부 슬로건) */
-
-/* style.css 약 170번째 줄 근처 */
 
 .about__slogan {
   margin: 20px 0 10px 0;
   font-weight: 800;
   font-size: 18px;
   letter-spacing: -0.01em;
-  
-  /* [수정] 다시 깔끔한 흰색으로 변경 */
   color: #ffffff; 
-  
   line-height: 1.4;
   word-break: keep-all;
-  
-  /* 네온 효과도 제거하여 담백하게 */
-  text-shadow: none; 
-}
-
-/* 막대바(|)는 계속 숨김 처리 */
-.about__slogan::before {
-  display: none; 
 }
 
 .about__desc { margin: 10px 0 0; font-size: 14px; color: #d1d1d1; }
@@ -208,130 +246,364 @@ body{
   margin-bottom: 12px; 
 }
 
-/* ====== Skills & Tools (그룹화 디자인) ====== */
+/* Skills */
 .chips, .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-
-/* 1. 강조 그룹 (Main Skills) */
 .chip { 
-  padding: 7px 14px; 
-  border-radius: 6px; 
-  font-size: 13px; 
-  font-weight: 700;
-  
-  /* 형광 민트 스타일 */
-  background: rgba(44, 237, 197, 0.05); 
-  border: 1px solid var(--accent);       
-  color: var(--accent);                  
-  box-shadow: 0 0 6px rgba(44, 237, 197, 0.15); /* 은은한 발광 */
+  padding: 7px 14px; border-radius: 6px; font-size: 13px; font-weight: 700;
+  background: rgba(44, 237, 197, 0.05); border: 1px solid var(--accent); color: var(--accent);                  
+  box-shadow: 0 0 6px rgba(44, 237, 197, 0.15);
 }
-
-/* 2. 서브 그룹 (Sub Skills - 회색) */
 .tool { 
-  padding: 6px 12px; 
-  border-radius: 6px; 
-  font-size: 12px; 
-  /* 차분한 회색 스타일 */
-  background: #1a1a1a;
-  border: 1px solid #333; 
-  color: #777;
+  padding: 6px 12px; border-radius: 6px; font-size: 12px; 
+  background: #1a1a1a; border: 1px solid #333; color: #777;
 }
 
-/* ====== Featured Work Badge ====== */
-.video__badges { display: flex; gap: 10px; margin-bottom: 12px; }
-.video__badge { 
-  padding: 6px 12px; 
-  border-radius: 999px; 
-  font-size: 12px; 
-  border: 1px solid var(--accent); 
-  color: var(--accent);
-  font-weight: 700; 
-}
-
-.video__title { margin: 0; font-size: 16px; font-weight: 800; }
-.video__desc { font-size: 13px; color: var(--text-sub); margin-top: 4px; }
-.video__frame { width: 100%; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; margin: 20px 0; border: 1px solid var(--line); }
-.video__frame iframe { width: 100%; height: 100%; border: none; }
-
-.video__link { font-size: 13px; margin-top: 10px; color: var(--text-sub); }
-.video__link a { 
-  color: var(--accent); 
-  font-weight: 700; 
-  text-decoration: none; 
-  border-bottom: 1px solid transparent;
-  transition: border-bottom 0.2s;
-}
-.video__link a:hover { border-bottom: 1px solid var(--accent); }
-
+/* Lists */
 .video__activities-list, .sidecard__list, .list { margin: 0; padding-left: 18px; font-size: 14px; color: #d1d1d1; }
 .video__activities-list li, .sidecard__list li, .list li { margin: 8px 0; }
 ul li::marker { color: var(--accent); } 
 
-/* ====== Profile Section ====== */
-/* style.css 약 220번째 줄 근처 */
-
-/* style.css 약 220번째 줄 근처 */
-
-.profile { 
-  /* [수정] 위/좌/우 여백은 없애고, 아래쪽 여백만 24px 줍니다 */
-  margin: 0 0 24px 0; 
-  
-  padding: 0; 
-  overflow: hidden; 
-  border: none; 
-}
-
-/* 아래 내용은 기존과 동일 */
-.profile img { 
-  width: 100%; 
-  aspect-ratio: 4/5; 
-  object-fit: cover; 
-  filter: grayscale(100%) contrast(1.1); 
-}
-.profile__cap { 
-  padding: 20px; 
-  background: var(--bg-card); 
-  border-top: 1px solid var(--line); 
-}
-.profile__role { 
-  font-weight: 900; 
-  font-size: 22px; 
-  display: block; 
-  margin-bottom: 6px; 
-  letter-spacing: -0.02em; 
-  color: #fff;
-}
-.profile__meta { 
-  color: var(--accent); 
-  font-size: 14px; 
-  line-height: 1.5; 
-  font-weight: 600;
-  display: block; 
-}
+/* Profile */
+.profile { margin: 0 0 24px 0; padding: 0; overflow: hidden; border: none; }
+.profile img { width: 100%; aspect-ratio: 4/5; object-fit: cover; filter: grayscale(100%) contrast(1.1); }
+.profile__cap { padding: 20px; background: var(--bg-card); border-top: 1px solid var(--line); }
+.profile__role { font-weight: 900; font-size: 22px; display: block; margin-bottom: 6px; letter-spacing: -0.02em; color: #fff; }
+.profile__meta { color: var(--accent); font-size: 14px; line-height: 1.5; font-weight: 600; display: block; }
 
 .contact__row { display: grid; grid-template-columns: 80px 1fr; padding: 6px 0; }
 .label { color: var(--text-muted); font-size: 12px; font-weight: 700; }
 .value { font-size: 13px; color: #eee; }
 
+/* ====== NEW: Video Gallery Grids ====== */
+
+/* 1. Standard Landscape Grid (Cinematic, Branded Landscape) */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.video-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  transition: transform 0.2s;
+}
+.video-card:hover {
+  border-color: var(--accent);
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  background: #000;
+}
+.video-wrapper iframe {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+}
+
+.video-info { padding: 16px; }
+.video-info h4 { margin: 0 0 6px 0; font-size: 15px; color: #fff; }
+.video-info p { margin: 0; font-size: 13px; color: var(--text-muted); }
+
+/* 2. Short-Form Grid (Vertical) */
+.shorts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.shorts-card {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--line);
+  aspect-ratio: 9 / 16;
+  position: relative;
+}
+.shorts-card iframe {
+  width: 100%; height: 100%; border: none;
+}
+.shorts-title {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  color: #fff;
+  font-size: 12px;
+  padding: 20px 10px 10px;
+  margin: 0;
+  text-align: center;
+  pointer-events: none; /* 클릭은 영상에 가도록 */
+}
+
+/* 3. Instagram Link Card (Custom Design) */
+.insta-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 9 / 16;
+  background: linear-gradient(135deg, #222, #111);
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  padding: 20px;
+  text-align: center;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.insta-card:hover {
+  border-color: #E1306C; /* 인스타 컬러 */
+  transform: translateY(-3px);
+}
+.insta-icon { font-size: 32px; margin-bottom: 12px; }
+.insta-text { color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 16px; line-height: 1.4; }
+.insta-btn {
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #E1306C;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ====== Responsive (Mobile) ====== */
 /* ====== Responsive (Mobile) ====== */
 @media (max-width: 920px){
-  .about__grid { display: flex; flex-direction: column; }
-  .about__left, .about__right { display: contents; }
+  
+  /* [핵심 추가] 모바일에서는 여백을 좁게(좌우 20px) 설정해서 화면을 넓게 씀 */
+  .container {
+    width: calc(100% - 40px);
+  }
 
+  /* 기존 모바일 설정들 */
+  .navbar__menu { display: none; } /* 메뉴 숨김 */
+  .navbar__inner { justify-content: center; } /* 로고 중앙 정렬 */
+  
+  .about__grid { display: flex; flex-direction: column; }
+  .about__left, .about__right { display: contents; } 
+
+  /* 모바일 순서 재배치 */
   .profile { order: 1; margin-bottom: 24px; }
   .aboutIntro { order: 2; }
   .focusCard { order: 3; }
   .awardsCard { order: 4; }
-  .featured { order: 5; }
+  .skillsBlock { order: 5; } 
   .otherWorks { order: 6; }
-  .skillsBlock { order: 7; }
-  .contact { order: 8; }
+  .contact { order: 7; }
 
-  .card-item { margin-bottom: 16px; width: 100%; padding: 20px; }
-  .hero__title { font-size: 32px; }
+  .hero { height: 300px; }
+  .hero__title { font-size: 36px; }
   
-  /* 모바일에서 Hero 높이 자동 조절 (더 컴팩트하게) */
-  .hero { height: 280px; }
-  .section { padding-top: 16px; } /* 모바일에서 간격 더 줄임 */
+  .gallery-grid { grid-template-columns: 1fr; } /* 갤러리 1열 */
+  .shorts-grid { grid-template-columns: repeat(2, 1fr); } /* 숏폼 2열 */
 }
 
 .footer { padding: 40px 0; background: #000; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+/* =========================================
+   [수정] 섹션별 레이아웃 커스텀 (2025.01 Ver)
+   ========================================= */
+
+/* 1. CINEMATIC 섹션: 가장 크게 강조 (2열 배치) */
+/* 기존 Branded처럼 시원시원하게 보여줍니다 */
+#cinematic .gallery-grid {
+  display: grid;
+  /* PC에서 2개씩 꽉 차게 배열 (화면이 작으면 1개로 자동 변경) */
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); 
+  gap: 30px;
+}
+
+/* 2. BRANDED (가로형) 섹션: 작게 축소 (3~4열 배치) */
+/* 중요도가 낮으므로 작게 여러 개 보여줍니다 */
+#branded .gallery-grid {
+  display: grid;
+  /* 카드를 작게 설정 (최소 280px) */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* 3. BRANDED (숏폼) 섹션: 3개 남았으니 크기 키움 */
+.shorts-grid {
+  display: grid;
+  /* 기존 180px -> 260px로 확대 (개수가 적으니 더 잘 보이게) */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  justify-content: center; /* 가운데 정렬 */
+}
+
+/* 4. LIVE 섹션: 창문 모양 (2x2) 칼각 정렬 */
+#live .gallery-grid {
+  display: grid;
+  /* 무조건 2칸씩 정렬 (창문 프레임 느낌) */
+  grid-template-columns: 1fr 1fr; 
+  gap: 20px; /* 창틀 두께 느낌 */
+}
+
+/* 라이브 영상 카드는 높이를 조금 더 줘서 안정감 있게 */
+#live .video-wrapper {
+  padding-bottom: 56.25%; /* 16:9 비율 유지 */
+  border-radius: 8px;
+}
+
+
+/* ====== 모바일 대응 (화면 좁을 때) ====== */
+@media (max-width: 768px) {
+  /* 모바일에서는 시네마틱도, 라이브도 전부 1줄로 크게 보기 */
+  #cinematic .gallery-grid,
+  #branded .gallery-grid,
+  #live .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* 숏폼은 모바일에서 2줄 보기 유지 */
+  .shorts-grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 12px;
+  }
+}
+
+/* =========================================
+   [수정] 섹션별 레이아웃 커스텀 (2025.01 Ver)
+   ========================================= */
+
+/* 1. CINEMATIC: 영상 2개를 1:1 비율로 아주 크게 배치 */
+#cinematic .gallery-grid {
+  display: grid;
+  /* 무조건 2개로 고정하여 영상을 최대한 크게 보여줌 */
+  grid-template-columns: 1fr 1fr; 
+  gap: 40px; /* 간격도 시원하게 넓힘 */
+}
+
+/* [추가] 텍스트 링크 디자인 (민트색 포인트) */
+.video-link {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--accent); /* 형광 민트 */
+  text-decoration: none;
+  font-weight: 700;
+  transition: opacity 0.2s;
+}
+.video-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* 2. BRANDED (가로형) 섹션: 작게 유지 */
+#branded .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* 3. 숏폼 섹션: 확대 유지 */
+.shorts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  justify-content: center;
+}
+
+/* 4. LIVE 섹션: 창문형 유지 */
+#live .gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 20px;
+}
+#live .video-wrapper {
+  padding-bottom: 56.25%;
+  border-radius: 8px;
+}
+
+/* ====== 모바일 대응 (화면 좁을 때) ====== */
+@media (max-width: 768px) {
+  /* 모바일에서는 전부 1줄로 변경 */
+  #cinematic .gallery-grid,
+  #branded .gallery-grid,
+  #live .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* 숏폼은 모바일 2줄 */
+  .shorts-grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 12px;
+  }
+}
+/* ====== [추가] MEDIA & PRESS 카드 디자인 ====== */
+
+/* 사진 영역: 꽉 차게 */
+.media__img {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.media__img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* 살짝 어둡게 해서 글씨 집중? 아니면 원본 그대로? -> 원본이 화사해서 그대로 둠 */
+  transition: transform 0.3s ease;
+}
+/* 마우스 올리면 사진 살짝 확대 */
+.card-item:hover .media__img img {
+  transform: scale(1.03);
+}
+
+/* 텍스트 내용 */
+.media__title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 8px 0;
+  font-family: 'Montserrat', 'Pretendard', sans-serif; /* 영문 폰트 섞어씀 */
+}
+
+.media__desc {
+  font-size: 14px;
+  color: var(--text-sub);
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+.media__desc .highlight {
+  color: var(--accent); /* 형광 민트 강조 */
+  font-weight: 700;
+}
+
+/* 기사 보기 버튼 스타일 */
+.media__link-btn {
+  display: inline-block;
+  padding: 10px 16px;
+  background: rgba(44, 237, 197, 0.1); /* 민트색 배경 연하게 */
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+  width: 100%; /* 모바일/PC 모두 꽉 차게 */
+  text-align: center;
+}
+
+.media__link-btn:hover {
+  background: var(--accent);
+  color: #000; /* 호버 시 검정 글씨로 반전 */
+  box-shadow: 0 0 15px rgba(44, 237, 197, 0.4);
+}
+
+/* ====== [추가] 소제목 아이콘 디자인 ====== */
+.block__title i {
+  color: var(--accent); /* 형광 민트색 */
+  margin-right: 8px;    /* 글자와 아이콘 사이 간격 */
+  font-size: 14px;      /* 아이콘 크기 살짝 키움 */
+  vertical-align: middle;
+  position: relative;
+  top: -1px;            /* 높이 미세 조정 */
+}
