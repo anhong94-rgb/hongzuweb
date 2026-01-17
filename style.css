@@ -57,7 +57,15 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* width: 100% 제거됨 (container 여백 따름) */
+  width: 100%; /* 네비게이션 너비 꽉 차게 보정 */
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 60px; /* 컨테이너와 동일한 여백 */
+}
+
+/* 모바일에서 네비게이션 여백 조정용 */
+@media (max-width: 920px) {
+  .navbar__inner { padding: 0 20px; }
 }
 
 .navbar__logo {
@@ -340,17 +348,17 @@ ul li::marker { color: var(--accent); }
 .video-link:hover { opacity: 0.8; text-decoration: underline; }
 
 /* =========================================
-   [2025 Final] Section Specific Layouts
+   [Final] Section Specific Layouts (PC Default)
    ========================================= */
 
-/* 1. CINEMATIC: 2개 영상을 1:1로 아주 크게 배치 */
+/* 1. CINEMATIC */
 #cinematic .gallery-grid {
   display: grid;
   grid-template-columns: 1fr 1fr; 
   gap: 40px; 
 }
 
-/* 2. LIVE: 창문형 (2x2) 격자 배치 */
+/* 2. LIVE */
 #live .gallery-grid {
   display: grid;
   grid-template-columns: 1fr 1fr; 
@@ -361,42 +369,30 @@ ul li::marker { color: var(--accent); }
   border-radius: 8px;
 }
 
-/* =========================================
-   [수정] BRANDED 통합 레이아웃 (Grid Ver)
-   ========================================= */
-
-/* 통합 컨테이너: CSS Grid를 사용하여 배치를 칼같이 잡습니다 */
+/* 3. BRANDED MIX (통합형 - Grid System) */
 .branded-mix {
   display: grid;
-  /* 숏폼 3개가 나란히 들어갈 3개의 기둥(Column)을 만듭니다 */
-  grid-template-columns: repeat(3, auto); 
-  gap: 30px; /* 영상 사이 간격 */
-  justify-content: center; /* 전체 중앙 정렬 */
+  grid-template-columns: repeat(3, auto); /* 3개의 기둥 */
+  gap: 30px; 
+  justify-content: center; 
   margin-top: 20px;
 }
 
-/* 1. 가로형 카드 (Landscape) - 상단 중앙 배치 */
+/* 3-1. 가로형 카드 */
 .landscape-item {
-  /* [핵심] 3개의 기둥을 혼자 다 차지하게(span) 해서 맨 윗줄에 둡니다 */
-  grid-column: 1 / -1; 
-  
-  /* [핵심] 너비를 500px로 줄여서 부담스럽지 않게 만듭니다 */
+  grid-column: 1 / -1; /* 전체 행 차지 */
   width: 500px; 
-  
-  /* 그 안에서 중앙 정렬 */
   justify-self: center; 
-  
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   background: var(--bg-card); 
   border-radius: 12px;
-  margin-bottom: 10px; /* 숏폼들과의 거리 */
+  margin-bottom: 10px;
 }
 
 .landscape-item .video-wrapper {
-  padding-bottom: 56.25%; /* 16:9 비율 */
+  padding-bottom: 56.25%; 
   border-radius: 12px 12px 0 0; 
 }
-
 .landscape-item .video-info { 
   padding: 16px; 
   border: 1px solid var(--line); 
@@ -406,12 +402,9 @@ ul li::marker { color: var(--accent); }
 .landscape-item .video-info h4 { font-size: 15px; margin: 0 0 4px 0; color: #fff; }
 .landscape-item .video-info p { font-size: 13px; margin: 0; color: var(--text-muted); }
 
-
-/* 2. 숏폼 카드 (Short-Form) - 하단 3열 배치 */
+/* 3-2. 숏폼 카드 */
 .shorts-card {
-  /* 높이는 적당히 시원하게 */
   height: 320px; 
-  
   width: auto;   
   aspect-ratio: 9 / 16;
   border-radius: 12px;
@@ -420,7 +413,6 @@ ul li::marker { color: var(--accent); }
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   transition: transform 0.2s;
 }
-
 .shorts-card iframe { width: 100%; height: 100%; }
 
 /* 호버 효과 */
@@ -429,32 +421,76 @@ ul li::marker { color: var(--accent); }
   border-color: var(--accent);
 }
 
-/* ====== 모바일 대응 (화면 좁을 때) ====== */
+
+/* ====== Footer ====== */
+.footer {
+  padding: 40px 0;
+  background: #000;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--line);
+  margin-top: 60px;
+}
+
+
+/* ============================================================
+   [Responsive] Mobile & Tablet (여기가 핵심입니다!)
+   ============================================================ */
+
+/* 1. 태블릿 및 작은 화면 (920px 이하) */
+@media (max-width: 920px){
+  
+  /* 컨테이너 여백 좁게 */
+  .container { width: calc(100% - 40px); }
+
+  /* 네비게이션: 메뉴 숨기고 로고만 중앙 정렬 */
+  .navbar__menu { display: none; }
+  .navbar__inner { justify-content: center; }
+  
+  /* About: 1열로 변경 */
+  .about__grid { display: flex; flex-direction: column; }
+  .about__left, .about__right { display: contents; } 
+
+  /* 모바일 순서 재배치 */
+  .profile     { order: 1; margin-bottom: 24px; } 
+  .aboutIntro  { order: 2; } 
+  .focusCard   { order: 3; } 
+  .mediaBlock  { order: 4; } 
+  .awardsCard  { order: 5; } 
+  .skillsBlock { order: 6; } 
+  .contact     { order: 7; } 
+
+  .hero { height: 300px; }
+  .hero__title { font-size: 36px; }
+  
+  /* CINEMATIC, LIVE: 1열로 변경 */
+  #cinematic .gallery-grid,
+  #live .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 2. 모바일 (768px 이하) - BRANDED 섹션 구조 변경 */
 @media (max-width: 768px) {
+  
+  /* Branded Mix: Grid 해제하고 세로 정렬(Flex)로 변경 */
   .branded-mix {
-    /* 모바일에서는 그리드 풀고 그냥 일자로 쭉 나열 */
     display: flex;
     flex-direction: column;
     align-items: center;    
     gap: 30px;
   }
   
+  /* 가로형 카드: 화면 꽉 차게 */
   .landscape-item { 
     width: 100%; 
-    max-width: 400px; /* 모바일에서는 꽉 차게 */
+    max-width: 100%; 
+    margin-bottom: 0;
   }
   
+  /* 숏폼 카드: 터치하기 좋게 큼직하게 */
   .shorts-card { 
-    height: 400px; /* 모바일 터치하기 좋게 */
+    height: 400px; 
   }
-}
-/* ====== [복구] Footer (하단 저작권 표시) ====== */
-.footer {
-  padding: 40px 0;
-  background: #000; /* 완전 검은색 배경 */
-  text-align: center;
-  font-size: 12px;
-  color: var(--text-muted); /* 회색 글씨 */
-  border-top: 1px solid var(--line); /* 윗부분에 살짝 선을 그어 구분감 줌 */
-  margin-top: 60px; /* 본문과 간격 띄우기 */
 }
