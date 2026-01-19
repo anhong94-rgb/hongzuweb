@@ -557,26 +557,25 @@ ul li::marker { color: var(--accent); }
 /* ====== [추가] ABOUT 슬로건 전용 디자인 ====== */
 
 /* 1. 텍스트 디자인 (명조체, 기울기, 크기) */
-/* ====== [최종] ABOUT 슬로건 디자인 (명조체 + 기울기 + 경계선 없음) ====== */
+/* ====== [최종 수정] ABOUT 로그라인 디자인 ====== */
 
 .slogan-style {
-  font-family: 'Nanum Myeongjo', serif !important; /* 명조체 */
-  font-style: italic; /* [복구] 다시 기울기 적용 */
+  font-family: 'Nanum Myeongjo', serif !important;
+  font-style: italic;
   font-size: 26px;
-  line-height: 1.6;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 50px; /* 경계선 없이 여백만 넉넉하게 */
   
-  /* border-bottom은 없습니다 (깔끔하게) */
+  /* [수정] 줄 간격을 1.6 -> 1.35로 줄임 (더 쫀쫀하게) */
+  line-height: 1.35;
+  
+  font-weight: 700;
+  color: #e0e0e0;
+  margin-bottom: 50px;
 }
 
-/* 기존 민트색 작은 바 숨기기 (필수) */
 .slogan-style::after {
   display: none !important;
 }
 
-/* 모바일 폰트 크기 */
 @media (max-width: 768px) {
   .slogan-style { font-size: 21px; margin-bottom: 40px; }
 }
