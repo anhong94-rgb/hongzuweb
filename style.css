@@ -1,7 +1,9 @@
 /* ====== Base & Variables ====== */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
+/* [수정] 나눔명조(Nanum Myeongjo) 폰트 추가됨 */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Nanum+Myeongjo:ital,wght@0,700;1,700&display=swap');
 
 :root{
+  /* ... 기존 코드 동일 ... */
   --bg-main: #0b0b0b;
   --bg-card: #111111;
   --bg-soft: #1a1a1a;
@@ -504,4 +506,77 @@ ul li::marker { color: var(--accent); }
   .shorts-card { 
     height: 400px; 
   }
+}
+
+/* ====== [추가] 미디어 슬라이드(Carousel) 스타일 ====== */
+.media__slider {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 16px;
+  aspect-ratio: 16 / 10; /* 사진 비율 고정 */
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+  height: 100%;
+}
+
+.slides img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* 좌우 화살표 버튼 */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s;
+}
+.slider-btn:hover { background: var(--accent); color: #000; }
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* ====== [추가] ABOUT 슬로건 전용 디자인 ====== */
+
+/* 1. 텍스트 디자인 (명조체, 기울기, 크기) */
+/* ====== [최종] ABOUT 슬로건 디자인 (명조체 + 기울기 + 경계선 없음) ====== */
+
+.slogan-style {
+  font-family: 'Nanum Myeongjo', serif !important; /* 명조체 */
+  font-style: italic; /* [복구] 다시 기울기 적용 */
+  font-size: 26px;
+  line-height: 1.6;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 50px; /* 경계선 없이 여백만 넉넉하게 */
+  
+  /* border-bottom은 없습니다 (깔끔하게) */
+}
+
+/* 기존 민트색 작은 바 숨기기 (필수) */
+.slogan-style::after {
+  display: none !important;
+}
+
+/* 모바일 폰트 크기 */
+@media (max-width: 768px) {
+  .slogan-style { font-size: 21px; margin-bottom: 40px; }
 }
