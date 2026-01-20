@@ -287,19 +287,58 @@ ul li::marker { color: var(--accent); }
 .prev { left: 10px; }
 .next { right: 10px; }
 
-/* Slogan & Animation */
+/* ====== [최종 수정] ABOUT 섹션: 간격 최적화 ====== */
+
+/* 1. 슬로건 디자인 */
 .slogan-style {
-  font-family: 'Nanum Myeongjo', serif !important; font-style: italic; font-size: 26px;
-  line-height: 1.35; font-weight: 700; color: #e0e0e0; margin: 0; text-align: center;
+  font-family: 'Nanum Myeongjo', serif !important;
+  font-style: italic;
+  font-size: 26px;
+  line-height: 1.35;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin: 0;
+  text-align: center;
 }
 .slogan-style::after { display: none !important; }
 
+/* 2. 간격 설정 (빨간 네모 박스 크기 반영) */
 .slogan-spacer {
-  margin-top: 40vh; /* 화면 중앙 */
-  margin-bottom: 80vh; /* 여백 ㅈㄴ 넓게 */
+  /* 위쪽: 20vh (스크롤 조금 내리면 등장) */
+  margin-top: 20vh;
+  
+  /* [수정] 아래쪽: 30vh -> 130px로 축소 */
+  /* 빨간 네모 박스만큼의 적당한 거리감입니다 */
+  margin-bottom: 130px; 
+  
+  /* 메뉴 클릭 시 위치 보정 */
+  scroll-margin-top: 30vh; 
 }
-#about { scroll-margin-top: 100px; }
 
-.reveal-on-scroll { opacity: 0; transform: translateY(40px); transition: all 1.0s ease-out; }
-.reveal-on-scroll.active { opacity: 1; transform: translateY(0); }
-.about__grid.reveal-on-scroll { transition-delay: 0s; }
+/* 3. 애니메이션 (Fade In) */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1.0s ease-out;
+}
+
+.reveal-on-scroll.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 4. [필수] 순차 등장 (Time Delay) */
+/* 거리가 가까워졌으니, 시간차를 둬서 동시에 뜨는 걸 방지합니다 */
+.about__grid.reveal-on-scroll {
+  transition-delay: 0.3s; /* 슬로건 뜨고 0.3초 뒤에 등장 */
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .slogan-style { font-size: 21px; }
+  .slogan-spacer { 
+    margin-top: 15vh; 
+    margin-bottom: 80px; /* 모바일은 조금 더 가깝게 */
+    scroll-margin-top: 25vh;
+  }
+}
