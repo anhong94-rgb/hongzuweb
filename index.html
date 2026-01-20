@@ -31,7 +31,7 @@
     </div>
   </nav>
 
-<header class="hero" aria-label="Hero">
+  <header class="hero" aria-label="Hero">
     <div class="hero__bg" role="img" aria-label="배경 이미지"></div>
     <div class="hero__overlay"></div>
 
@@ -41,22 +41,26 @@
         CREATOR<br/>
         AHN HONGJU
       </h1>
-      
       <p class="hero__sub">
         Cinematic · Screenwriting · Storytelling · Hyperrealism
       </p>
-      
     </div>
   </header>
 
   <main>
-<section class="section about" id="about">
+    <section class="section about">
       <div class="container">
-        <h2 class="section__title slogan-style">
-          “현실의 결을 따라 닿는,<br/>선명한 몰입의 경험”
-        </h2>
+        
+        <div class="slogan-wrapper reveal-on-scroll slogan-spacer">
+          <h2 class="slogan-style">
+            “현실의 결을 따라 닿는,<br/>선명한 몰입의 경험”
+          </h2>
+        </div>
 
-        <div class="about__grid">
+        <h2 class="section__title reveal-on-scroll" id="about">ABOUT</h2>
+
+        <div class="about__grid reveal-on-scroll">
+          
           <div class="about__left">
             
             <div class="aboutIntro card-item">
@@ -172,7 +176,7 @@
       </div>
     </section>
 
-<section class="section" id="cinematic">
+    <section class="section" id="cinematic">
       <div class="container">
         <h2 class="section__title">CINEMATIC</h2>
         <div class="gallery-grid">
@@ -205,9 +209,7 @@
       </div>
     </section>
 
-
-
-<section class="section" id="live">
+    <section class="section" id="live">
       <div class="container">
         <h2 class="section__title">LIVE PERFORMANCE</h2>
         <div class="gallery-grid">
@@ -224,7 +226,7 @@
             </div>
           </div>
 
-          </div>
+        </div>
       </div>
     </section>
 
@@ -244,16 +246,19 @@
             </div>
           </div>
 
-          <div class="shorts-card">
-            <iframe src="https://www.youtube.com/embed/qC9CJn290zQ" title="분실물 안내" frameborder="0" allowfullscreen></iframe>
+          <div class="shorts-card" onclick="this.innerHTML='<iframe src=\'https://www.youtube.com/embed/qC9CJn290zQ?autoplay=1\' frameborder=\'0\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
+             <img src="https://img.youtube.com/vi/qC9CJn290zQ/maxresdefault.jpg" alt="Shorts 1">
+             <div class="play-btn"><i class="fa-solid fa-play"></i></div>
           </div>
           
-          <div class="shorts-card">
-            <iframe src="https://www.youtube.com/embed/DEoVCRD0Mgg" title="무료 강의 프로그램" frameborder="0" allowfullscreen></iframe>
+          <div class="shorts-card" onclick="this.innerHTML='<iframe src=\'https://www.youtube.com/embed/DEoVCRD0Mgg?autoplay=1\' frameborder=\'0\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
+             <img src="https://img.youtube.com/vi/DEoVCRD0Mgg/maxresdefault.jpg" alt="Shorts 2">
+             <div class="play-btn"><i class="fa-solid fa-play"></i></div>
           </div>
           
-          <div class="shorts-card">
-            <iframe src="https://www.youtube.com/embed/BgbyOTIqgno" title="꿀명소 소개" frameborder="0" allowfullscreen></iframe>
+          <div class="shorts-card" onclick="this.innerHTML='<iframe src=\'https://www.youtube.com/embed/BgbyOTIqgno?autoplay=1\' frameborder=\'0\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
+             <img src="https://img.youtube.com/vi/BgbyOTIqgno/maxresdefault.jpg" alt="Shorts 3">
+             <div class="play-btn"><i class="fa-solid fa-play"></i></div>
           </div>
 
         </div>
@@ -268,7 +273,7 @@
     </div>
   </footer>
 
-<script>
+  <script>
     document.getElementById('y').textContent = new Date().getFullYear();
     
     // Navbar Scroll Effect
@@ -281,25 +286,39 @@
       }
     });
 
-    /* [추가] 이미지 슬라이드 기능 */
+    /* 이미지 슬라이드 기능 */
     let currentIndex = 0;
     const slides = document.querySelectorAll('.slides img');
     const track = document.getElementById('sliderTrack');
     const totalSlides = slides.length;
 
     function moveSlide(direction) {
+      if(totalSlides === 0) return;
       currentIndex += direction;
-
-      // 처음이나 끝에 도달하면 순환되게 설정
       if (currentIndex < 0) {
         currentIndex = totalSlides - 1;
       } else if (currentIndex >= totalSlides) {
         currentIndex = 0;
       }
-
-      // 슬라이드 이동 (가로 길이만큼 이동)
       track.style.transform = `translateX(-${currentIndex * 100}%)`;
     }
+
+    /* 시네마틱 스크롤 연출 (Intersection Observer) */
+    const observerOptions = {
+      threshold: 0.15 
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+      observer.observe(el);
+    });
   </script>
 </body>
 </html>
