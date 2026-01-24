@@ -287,7 +287,7 @@ ul li::marker { color: var(--accent); }
 .prev { left: 10px; }
 .next { right: 10px; }
 
-/* ====== [최종 수정] ABOUT 섹션: 간격 최적화 ====== */
+/* ====== [최종 수정] ABOUT 섹션: 간격 및 애니메이션 최적화 ====== */
 
 /* 1. 슬로건 디자인 */
 .slogan-style {
@@ -302,20 +302,14 @@ ul li::marker { color: var(--accent); }
 }
 .slogan-style::after { display: none !important; }
 
-/* 2. 간격 설정 (빨간 네모 박스 크기 반영) */
+/* 2. 간격 설정 (PC 기준) */
 .slogan-spacer {
-  /* 위쪽: 20vh (스크롤 조금 내리면 등장) */
   margin-top: 20vh;
-  
-  /* [수정] 아래쪽: 30vh -> 130px로 축소 */
-  /* 빨간 네모 박스만큼의 적당한 거리감입니다 */
-  margin-bottom: 130px; 
-  
-  /* 메뉴 클릭 시 위치 보정 */
+  margin-bottom: 130px; /* PC에서는 여유 있게 */
   scroll-margin-top: 30vh; 
 }
 
-/* 3. 애니메이션 (Fade In) */
+/* 3. 애니메이션 기본 설정 (Fade In) */
 .reveal-on-scroll {
   opacity: 0;
   transform: translateY(40px);
@@ -327,18 +321,25 @@ ul li::marker { color: var(--accent); }
   transform: translateY(0);
 }
 
-/* 4. [필수] 순차 등장 (Time Delay) */
-/* 거리가 가까워졌으니, 시간차를 둬서 동시에 뜨는 걸 방지합니다 */
+/* 4. [PC 전용] 순차 등장 (Time Delay) */
+/* PC에서는 0.3초 늦게 떠서 고급스러운 리듬감을 줍니다 */
 .about__grid.reveal-on-scroll {
-  transition-delay: 0.3s; /* 슬로건 뜨고 0.3초 뒤에 등장 */
+  transition-delay: 0.3s; 
 }
 
-/* 모바일 대응 */
+/* 5. [모바일 대응] 여기가 핵심 수정 사항입니다! */
 @media (max-width: 768px) {
   .slogan-style { font-size: 21px; }
+  
   .slogan-spacer { 
     margin-top: 15vh; 
-    margin-bottom: 80px; /* 모바일은 조금 더 가깝게 */
+    margin-bottom: 60px; /* 간격도 모바일에 맞게 더 좁힘 (한 눈에 들어오게) */
     scroll-margin-top: 25vh;
+  }
+
+  /* [핵심] 모바일에서는 딜레이를 0초로 강제 변경 */
+  /* 이제 슬로건이 보이면, 밑에 정보들도 기다리지 않고 같이 뜹니다 */
+  .about__grid.reveal-on-scroll {
+    transition-delay: 0s !important; 
   }
 }
