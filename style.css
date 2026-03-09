@@ -47,7 +47,6 @@ body{
   display: flex; justify-content: space-between; align-items: center;
   width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 60px;
 }
-@media (max-width: 920px) { .navbar__inner { padding: 0 20px; } }
 
 .navbar__logo {
   font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 20px;
@@ -61,10 +60,18 @@ body{
 }
 .navbar__menu li a:hover { color: var(--accent); }
 
+/* 모바일 메뉴 토글 버튼 (기본 숨김) */
+.menu-toggle {
+  display: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
 /* ====== Hero Section ====== */
 .hero {
   position: relative;
-  height: 100vh; /* 화면 꽉 채움 */
+  height: 100vh;
   background: #000;
   overflow: hidden;
   margin-top: 0;
@@ -115,7 +122,7 @@ body{
 /* ====== About Grid ====== */
 .about__grid {
   display: grid;
-  grid-template-columns: 1.3fr 0.9fr; /* 여기가 비율의 핵심! HTML이 잘려서 이게 깨졌던 것 */
+  grid-template-columns: 1.3fr 0.9fr; 
   gap: 24px;
   align-items: start;
 }
@@ -134,12 +141,14 @@ body{
 
 .about__name h3 { margin: 0; font-size: 18px; }
 .muted { color: var(--text-sub); font-size: 13px; margin-top: 6px; }
+
+/* 텍스트 가독성 최적화 (줄간격 & 단어 단위 줄바꿈) */
 .about__desc { 
   margin: 10px 0 0; 
   font-size: 14px; 
   color: #d1d1d1; 
-  word-break: keep-all;
-  line-height: 1.8; /* 👉 줄 간격을 넓히기 위해 이 부분을 추가해 */
+  line-height: 1.8; 
+  word-break: keep-all; 
 }
 .about__desc strong { color: #fff; border-bottom: 1px solid rgba(44,237,197, 0.4); }
 
@@ -245,11 +254,35 @@ ul li::marker { color: var(--accent); }
   color: var(--text-muted); border-top: 1px solid var(--line); margin-top: 60px;
 }
 
-/* Responsive */
+/* ====== Responsive (모바일 최적화 및 네비게이션 적용) ====== */
 @media (max-width: 920px){
   .container { width: calc(100% - 40px); }
-  .navbar__menu { display: none; }
-  .navbar__inner { justify-content: center; }
+  .navbar__inner { padding: 0 20px; }
+  
+  /* 모바일 메뉴 토글 활성화 및 드롭다운 스타일 */
+  .menu-toggle { display: block; }
+  .navbar__menu {
+    position: absolute;
+    top: 70px; left: 0; width: 100%;
+    background: rgba(11, 11, 11, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding: 20px 0;
+    gap: 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+    
+    /* 애니메이션 처리 (숨김 상태) */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+  }
+  .navbar__menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
   
   .about__grid { display: flex; flex-direction: column; }
   .about__left, .about__right { display: contents; } 
@@ -293,9 +326,8 @@ ul li::marker { color: var(--accent); }
 .prev { left: 10px; }
 .next { right: 10px; }
 
-/* ====== [최종 수정] ABOUT 섹션: 간격 및 애니메이션 최적화 ====== */
+/* ====== ABOUT 섹션: 간격 및 애니메이션 최적화 ====== */
 
-/* 1. 슬로건 디자인 */
 .slogan-style {
   font-family: 'Nanum Myeongjo', serif !important;
   font-style: italic;
@@ -308,14 +340,12 @@ ul li::marker { color: var(--accent); }
 }
 .slogan-style::after { display: none !important; }
 
-/* 2. 간격 설정 (PC 기준) */
 .slogan-spacer {
   margin-top: 20vh;
-  margin-bottom: 130px; /* PC에서는 여유 있게 */
+  margin-bottom: 130px; 
   scroll-margin-top: 30vh; 
 }
 
-/* 3. 애니메이션 기본 설정 (Fade In) */
 .reveal-on-scroll {
   opacity: 0;
   transform: translateY(40px);
@@ -327,24 +357,19 @@ ul li::marker { color: var(--accent); }
   transform: translateY(0);
 }
 
-/* 4. [PC 전용] 순차 등장 (Time Delay) */
-/* PC에서는 0.3초 늦게 떠서 고급스러운 리듬감을 줍니다 */
 .about__grid.reveal-on-scroll {
   transition-delay: 0.3s; 
 }
 
-/* 5. [모바일 대응] 여기가 핵심 수정 사항입니다! */
 @media (max-width: 768px) {
   .slogan-style { font-size: 21px; }
   
   .slogan-spacer { 
     margin-top: 15vh; 
-    margin-bottom: 60px; /* 간격도 모바일에 맞게 더 좁힘 (한 눈에 들어오게) */
+    margin-bottom: 60px; 
     scroll-margin-top: 25vh;
   }
 
-  /* [핵심] 모바일에서는 딜레이를 0초로 강제 변경 */
-  /* 이제 슬로건이 보이면, 밑에 정보들도 기다리지 않고 같이 뜹니다 */
   .about__grid.reveal-on-scroll {
     transition-delay: 0s !important; 
   }

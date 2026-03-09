@@ -22,7 +22,10 @@
   <nav class="navbar">
     <div class="container navbar__inner">
       <a href="#" class="navbar__logo">HONGJU</a>
-      <ul class="navbar__menu">
+      <div class="menu-toggle" id="mobile-menu">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+      <ul class="navbar__menu" id="nav-menu">
         <li><a href="#about">ABOUT</a></li>
         <li><a href="#ai-generative">AI GENERATIVE</a></li>
         <li><a href="#cinematic">CINEMATIC</a></li>
@@ -66,7 +69,7 @@
               <div class="about__name">
                 <h3>안홍주</h3>
                 <p class="muted">
-                  한신대학교 디지털영상문화콘텐츠전공 · 영상제작자
+                  한신대학교 디지털영상문화콘텐츠전공 · VIDEOGRAPHER
                 </p>
               </div>
 
@@ -148,7 +151,7 @@
             <figure class="profile card-item">
               <img src="image/2.jpg" alt="프로필 사진" />
               <figcaption class="profile__cap">
-                <span class="profile__role">영상제작자 안홍주</span>
+                <span class="profile__role">VIDEOGRAPHER 안홍주</span>
                 <span class="profile__meta">Cinematic · AI Videography · Storytelling</span>
               </figcaption>
             </figure>
@@ -320,6 +323,21 @@
       } else {
         navbar.classList.remove('scrolled');
       }
+    });
+
+    // Mobile Menu Toggle JS 추가
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navMenu = document.getElementById('nav-menu');
+    const navLinks = document.querySelectorAll('.navbar__menu li a');
+
+    mobileMenu.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+      });
     });
 
     /* 이미지 슬라이드 기능 */
