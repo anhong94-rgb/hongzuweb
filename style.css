@@ -134,7 +134,13 @@ body{
 
 .about__name h3 { margin: 0; font-size: 18px; }
 .muted { color: var(--text-sub); font-size: 13px; margin-top: 6px; }
-.about__desc { margin: 10px 0 0; font-size: 14px; color: #d1d1d1; }
+.about__desc { 
+  margin: 10px 0 0; 
+  font-size: 14px; 
+  color: #d1d1d1; 
+  word-break: keep-all;
+  line-height: 1.8; /* 👉 줄 간격을 넓히기 위해 이 부분을 추가해 */
+}
 .about__desc strong { color: #fff; border-bottom: 1px solid rgba(44,237,197, 0.4); }
 
 .block { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 18px; }
