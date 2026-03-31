@@ -119,6 +119,19 @@ body{
   margin: 15px auto 0; border-radius: 2px; box-shadow: 0 0 8px var(--accent);
 }
 
+/* Section description (LIVE 등 섹션 부제) */
+.section__desc {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-sub);
+  margin: -20px 0 30px 0;
+  line-height: 1.6;
+}
+.section__desc strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
 /* ====== About Grid ====== */
 .about__grid {
   display: grid;
@@ -247,6 +260,22 @@ ul li::marker { color: var(--accent); }
 .shorts-card:hover .play-btn { transform: translate(-50%, -50%) scale(1.1); }
 .shorts-card iframe { width: 100%; height: 100%; border: none; }
 .shorts-card:hover, .landscape-item:hover { transform: translateY(-5px); border-color: var(--accent); }
+
+/* Shorts Label (숏폼 캡션) */
+.shorts-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 10px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-align: center;
+  pointer-events: none;
+}
 
 /* Footer */
 .footer {
