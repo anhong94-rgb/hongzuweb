@@ -403,3 +403,10 @@ ul li::marker { color: var(--accent); }
     transition-delay: 0s !important; 
   }
 }
+
+/* ====== AI GENERATIVE 영상 수직 배치 (동일 사이즈) ====== */
+.video-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 40px; /* 두 영상 사이의 위아래 간격 */
+}
