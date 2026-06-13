@@ -58,7 +58,7 @@ body{
 }
 .navbar__menu li a:hover { color: var(--accent); }
 
-/* 모바일 메뉴 토글 버튼 (기본 숨김) */
+/* 모바일 메뉴 토글 버튼 */
 .menu-toggle {
   display: none;
   color: #fff;
@@ -116,12 +116,17 @@ body{
   margin: 15px auto 0; border-radius: 2px; box-shadow: 0 0 8px var(--accent);
 }
 
-/* ====== About Grid (박스 높이 맞춤 stretch 추가) ====== */
+/* ====== About Grid (자연스러운 순차 배치 복구) ====== */
 .about__grid {
   display: grid;
   grid-template-columns: 1.3fr 0.9fr; 
   gap: 24px;
-  align-items: stretch; 
+  align-items: start; /* stretch에서 start로 복구하여 자연스럽게 위에서부터 쌓이게 변경 */
+}
+
+.about__left, .about__right { 
+  display: flex; 
+  flex-direction: column; 
 }
 
 .card-item {
@@ -132,10 +137,6 @@ body{
 }
 .card-item:hover { border-color: rgba(44, 237, 197, 0.4); transform: translateY(-3px); }
 
-.about__left, .about__right { display: flex; flex-direction: column; }
-.skillsBlock { order: 10; }
-.contact { order: 11; }
-
 .about__name h3 { margin: 0; font-size: 18px; }
 .muted { color: var(--text-sub); font-size: 13px; margin-top: 6px; }
 
@@ -143,7 +144,6 @@ body{
   margin: 10px 0 0; font-size: 14px; color: #d1d1d1; 
   line-height: 1.8; word-break: keep-all; 
 }
-.about__desc strong { color: #fff; border-bottom: 1px solid rgba(44,237,197, 0.4); }
 
 .block { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 18px; }
 .block__title { 
@@ -209,28 +209,25 @@ body{
 
 /* Grids */
 #cinematic .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-#live .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
-/* Branded Mix */
+/* ====== BRANDED CONTENTS (숏폼 갤러리 최적화) ====== */
 .branded-mix {
-  display: grid; grid-template-columns: repeat(3, auto); 
-  gap: 30px; justify-content: center; margin-top: 20px;
+  display: grid; 
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 24px; 
+  margin-top: 30px;
 }
-.landscape-item {
-  grid-column: 1 / -1; width: 500px; justify-self: center; 
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5); background: var(--bg-card); 
-  border-radius: 12px; margin-bottom: 10px;
-}
-.landscape-item .video-wrapper { padding-bottom: 56.25%; border-radius: 12px 12px 0 0; }
-.landscape-item .video-info { padding: 16px; border: 1px solid var(--line); border-top: none; border-radius: 0 0 12px 12px; }
 
 .shorts-card {
-  position: relative; cursor: pointer; height: 320px; width: auto; aspect-ratio: 9 / 16;
+  position: relative; cursor: pointer; 
+  width: 100%; height: auto; aspect-ratio: 9 / 16; 
   border-radius: 12px; overflow: hidden; border: 1px solid var(--line);
   box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.2s; background: #000;
 }
+
 .shorts-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: opacity 0.3s; }
 .shorts-card:hover img { opacity: 0.6; }
+
 .play-btn {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: 60px; height: 60px; background: rgba(44, 237, 197, 0.9);
@@ -239,8 +236,15 @@ body{
 }
 .play-btn i { color: #000; font-size: 24px; margin-left: 4px; }
 .shorts-card:hover .play-btn { transform: translate(-50%, -50%) scale(1.1); }
-.shorts-card iframe { width: 100%; height: 100%; border: none; }
-.shorts-card:hover, .landscape-item:hover { transform: translateY(-5px); border-color: var(--accent); }
+.shorts-card iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+.shorts-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+
+.shorts-label {
+  position: absolute; bottom: 12px; left: 12px;
+  background: rgba(0, 0, 0, 0.8); color: #fff; padding: 6px 10px;
+  border-radius: 6px; font-size: 11px; font-weight: 700; z-index: 5;
+  pointer-events: none; border: 1px solid rgba(255, 255, 255, 0.15);
+}
 
 /* Footer */
 .footer {
@@ -263,31 +267,33 @@ body{
   }
   .navbar__menu.active { opacity: 1; visibility: visible; transform: translateY(0); }
   
-  .about__grid { display: flex; flex-direction: column; }
+  .about__grid { display: flex; flex-direction: column; gap: 0; }
   .about__left, .about__right { display: contents; } 
 
-  /* [핵심 수정] 모바일 화면 배치 순서 완벽 제어 */
-  .profile { order: 1; margin-bottom: 24px; }    /* 1. 내 사진 */
-  .aboutIntro { order: 2; }                      /* 2. 소개글 */
-  .focusCard { order: 3; }                       /* 3. 포커스 */
-  .skillsBlock { order: 4; }                     /* 4. 스킬 및 툴 */
-  .mediaBlock { order: 5; }                      /* 5. 언론 보도 */
-  .contact { order: 6; }                         /* 6. 연락처 */
-  .awardsCard { order: 7; }                      /* 7. 수상 내역 */
-  .careerCard { order: 8; margin-bottom: 0; }    /* 8. 경력 (맨 밑) */
+  /* 모바일 화면 배치 순서 완벽 제어 */
+  .profile { order: 1; margin-bottom: 24px; }    
+  .aboutIntro { order: 2; }                      
+  .focusCard { order: 3; }                       
+  .skillsBlock { order: 4; }                     
+  .mediaBlock { order: 5; }                      
+  .contact { order: 6; }                         
+  .awardsCard { order: 7; }                      
+  .careerCard { order: 8; margin-bottom: 0; }    
 
   .hero { height: 80vh; }
   .hero__title { font-size: 36px; }
-  #cinematic .gallery-grid, #live .gallery-grid { grid-template-columns: 1fr; }
+  #cinematic .gallery-grid { grid-template-columns: 1fr; }
+  
+  .branded-mix { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .branded-mix { display: flex; flex-direction: column; align-items: center; gap: 30px; }
-  .landscape-item { width: 100%; max-width: 100%; margin-bottom: 0; }
-  .shorts-card { height: 400px; }
+  .branded-mix { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .shorts-card { height: auto; }
   
   .slogan-style { font-size: 21px; }
-  .slogan-spacer { margin-top: 30vh; margin-bottom: 50vh; }
+  .slogan-spacer { margin-top: 15vh; margin-bottom: 60px; scroll-margin-top: 25vh; }
+  .about__grid.reveal-on-scroll { transition-delay: 0s !important; }
 }
 
 /* Carousel */
@@ -320,12 +326,6 @@ body{
 .reveal-on-scroll { opacity: 0; transform: translateY(40px); transition: all 1.0s ease-out; }
 .reveal-on-scroll.active { opacity: 1; transform: translateY(0); }
 .about__grid.reveal-on-scroll { transition-delay: 0.3s; }
-
-@media (max-width: 768px) {
-  .slogan-style { font-size: 21px; }
-  .slogan-spacer { margin-top: 15vh; margin-bottom: 60px; scroll-margin-top: 25vh; }
-  .about__grid.reveal-on-scroll { transition-delay: 0s !important; }
-}
 
 /* ====== AI GENERATIVE 영상 수직 배치 ====== */
 .video-stack { display: flex; flex-direction: column; gap: 40px; }
